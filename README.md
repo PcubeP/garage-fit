@@ -34,7 +34,7 @@ and a live-camera footprint overlay for phones.
 
 ```bash
 npm install
-npm run dev        # http://localhost:5177
+npm run dev        # http://localhost:5173
 npm run build
 ```
 

@@ -14,15 +14,27 @@ export function CameraOverlay({ car, onClose }: Props) {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    let cancelled = false
     let stream: MediaStream | null = null
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setError('Camera is unavailable in this browser/context')
+      return
+    }
     navigator.mediaDevices
-      ?.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false })
+      .getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false })
       .then((s) => {
+        if (cancelled) {
+          s.getTracks().forEach((t) => t.stop())
+          return
+        }
         stream = s
         if (videoRef.current) videoRef.current.srcObject = s
       })
       .catch((e) => setError(e instanceof Error ? e.message : 'Camera unavailable'))
-    return () => stream?.getTracks().forEach((t) => t.stop())
+    return () => {
+      cancelled = true
+      stream?.getTracks().forEach((t) => t.stop())
+    }
   }, [])
 
   const w = (car.widthMm / 1000) * pxPerM

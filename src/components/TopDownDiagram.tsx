@@ -92,7 +92,7 @@ export function TopDownDiagram({ car, spaceLengthMm, spaceWidthMm, fit }: Props)
       )}
       {!fit.fitsWidth && (
         <text x={cx} y={cy + sL / 2 + 20} fill="#f87171" fontSize="12" textAnchor="middle" fontFamily="monospace">
-          too wide by {cm(-fit.widthClearMm / 2)}/side
+          too wide by {cm(Math.abs(fit.widthClearMm / 2)).replace('+', '')}/side
         </text>
       )}
     </svg>
