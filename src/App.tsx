@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { CARS } from '@/data/cars'
 import { computeFit, type Verdict } from '@/lib/fit'
 import { TopDownDiagram } from '@/components/TopDownDiagram'
